@@ -1,5 +1,7 @@
 package com.chatroom.message;
 
+import java.util.List;
+
 public class MessageServlet {
 private MessageIdDAO dao;
 public MessageServlet() {
@@ -15,21 +17,23 @@ public MessageIdVO addMes(Integer chatroomId, String content,Integer type) {
 	dao.sendMessage(mesVO);
 	return mesVO;
 }
-public MessageIdVO addImg() {
-	return null;
-}
-public MessageIdVO updataMes() {
+public MessageIdVO addImg(Integer chatroomId, byte[] img, Integer type) {
+	MessageIdVO mesVO = new MessageIdVO();
 	
-	return null;
+	mesVO.setChatroomId(chatroomId);
+	mesVO.setImg(img);
+	mesVO.setType(type);
+	dao.sendImg(mesVO);
+	return mesVO;
 }
-public MessageIdVO deleteMes(Integer id) {
+public void updataMes(Integer id, String mes) {
+	dao.updateMessage(id, mes);
+}
+public void deleteMes(Integer id) {
 	dao.deleteMessage(id);
-	return null;
 }
-public MessageIdVO getOneMes() {
-	return null;
+public List<MessageIdVO> getOneMes(Integer id) {
+	return dao.getMessage(id);
 }
-public MessageIdVO getAll() {
-	return null;
-}
+
 }

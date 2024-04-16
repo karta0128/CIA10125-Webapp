@@ -7,4 +7,5 @@ public interface MessageIdDAO {
 	public void deleteMessage(Integer id);
 	public List<MessageIdVO> getMessage(Integer user);
 	public void sendImg(MessageIdVO message);
+	public void updateMessage(Integer id, String mes);
 }

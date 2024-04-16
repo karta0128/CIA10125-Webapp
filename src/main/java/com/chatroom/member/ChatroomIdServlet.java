@@ -1,8 +1,9 @@
 package com.chatroom.member;
 
-import java.util.List;
 import java.util.Set;
 
+import javax.servlet.annotation.WebServlet;
+@WebServlet("/chatS.do")
 public class ChatroomIdServlet {
 	private ChatroomIdDAO dao;
 
@@ -21,7 +22,7 @@ public class ChatroomIdServlet {
 		dao.deleteChatroom(id);
 	}
 
-	public List<ChatroomIdVO> getOneRoom(Integer id) {
+	public ChatroomIdVO getOneRoom(Integer id) {
 		return dao.getOneChatroom(id);
 	}
 

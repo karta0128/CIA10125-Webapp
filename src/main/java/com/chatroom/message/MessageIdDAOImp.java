@@ -20,7 +20,9 @@ public class MessageIdDAOImp implements MessageIdDAO {
 	private static final String SEND_IMG = "INSERT INTO mmdf.member_message(member_chatroom_id,message_id, message_img, message_type)"
 			+ "VALUE(?,?,?);";
 	private static final String GET_MESSAGE = "SELECT * FROM mmdf.member_message WHERE member_chatroom_id= ?";
-	private static final String DELETE_MESSAGE ="DELETE FROM member_message WHERE message_id = ?";
+	private static final String DELETE_MESSAGE = "DELETE FROM member_message WHERE message_id = ?";
+	private static final String UPDATE_MESSAGE = "UPDATE FROM mmdf.member_message SET message_content = ? WHERE message_id = ? ;";
+
 	@Override
 	public void sendMessage(MessageIdVO message) {
 		Connection con = null;
@@ -111,28 +113,45 @@ public class MessageIdDAOImp implements MessageIdDAO {
 
 	@Override
 	public void deleteMessage(Integer id) {
-		Connection con =null;
-		PreparedStatement ps =null;
+		Connection con = null;
+		PreparedStatement ps = null;
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			con.setAutoCommit(false);
 			ps = con.prepareStatement(DELETE_MESSAGE);
-			ps.setInt(1,id);
+			ps.setInt(1, id);
 			ps.executeUpdate();
 			con.commit();
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-		}finally {
+		} finally {
 			try {
 				con.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void updateMessage(Integer id, String mes) {
+		Connection con = null;
+		PreparedStatement ps =null;
+		try {
+			con = DriverManager.getConnection(URL,USER,PASSWORD);
+			ps = con.prepareStatement(UPDATE_MESSAGE);
+			ps.setString(1,mes);
+			ps.setInt(2, id);
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }

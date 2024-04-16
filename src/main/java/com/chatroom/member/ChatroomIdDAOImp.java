@@ -120,27 +120,26 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 	}
 
 	@Override
-	public List<ChatroomIdVO> getOneChatroom(Integer id) {
+	public ChatroomIdVO getOneChatroom(Integer id) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<ChatroomIdVO> list = new ArrayList<ChatroomIdVO>();
+		ChatroomIdVO cr = new ChatroomIdVO();
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(GET_MEMBER_ROOM);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				ChatroomIdVO cr = new ChatroomIdVO();
 				cr.setMemberA(rs.getInt("member_a_id"));
 				cr.setMemberB(rs.getInt("member_b_id"));
-				list.add(cr);
+				
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return list;
+		return cr;
 	}
 
 }
