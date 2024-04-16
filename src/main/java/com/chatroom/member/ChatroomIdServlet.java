@@ -1,5 +1,6 @@
 package com.chatroom.member;
 
+import java.util.List;
 import java.util.Set;
 
 public class ChatroomIdServlet {
@@ -16,20 +17,12 @@ public class ChatroomIdServlet {
 		return crVO;
 	}
 
-	public ChatroomIdVO updateRoom() {
-		ChatroomIdVO crVO = new ChatroomIdVO();
-		return crVO;
-	}
-
-	public ChatroomIdVO deleteRoom(Integer id) {
-		ChatroomIdVO crVO = new ChatroomIdVO();
+	public void deleteRoom(Integer id) {
 		dao.deleteChatroom(id);
-		return crVO;
 	}
 
-	public ChatroomIdVO getOneRoom() {
-		ChatroomIdVO crVO = new ChatroomIdVO();
-		return crVO;
+	public List<ChatroomIdVO> getOneRoom(Integer id) {
+		return dao.getOneChatroom(id);
 	}
 
 	public Set<ChatroomIdVO> getAllRoom(Integer id) {
