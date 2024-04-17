@@ -29,14 +29,21 @@ public class ChatroomIdServlet {
 		return dao.getAllChatroom(id);
 	}
 
+	public List<ChatroomIdVO> getAllRoom() {
+		return dao.getAllRoom();
+	}
 	public List<ChatroomIdVO> getAll() {
 		return dao.getAll();
 	}
 //	public static void main(String[] args) {
 //		ChatroomIdServlet ca = new ChatroomIdServlet();
-//		ChatroomIdVO cb = ca.getOneRoom(1);
-//		System.out.println(cb.getChatroomId());
-//		System.out.println(cb.getMemberA());
-//		System.out.println(cb.getMemberB());
+//		List<ChatroomIdVO>cb = ca.getAll();
+//		System.out.println(cb);
+//		for(ChatroomIdVO ab:cb) {
+//			System.out.println(ab.getChatroomId());
+//			System.out.println(ab.getMemberA());
+//			System.out.println(ab.getMemberB());
+//		}
+//		
 //	}
 }

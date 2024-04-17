@@ -73,7 +73,7 @@ public class ChatroomServlet extends HttpServlet {
 			successView.forward(req, res);
 		}
 //*******************************//
-		if(false) {
+		if("get_Message".equals(action)) {
 			
 		}
 	}

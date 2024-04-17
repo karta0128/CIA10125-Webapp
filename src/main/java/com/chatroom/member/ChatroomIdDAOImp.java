@@ -28,7 +28,7 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 			+ "WHERE member_chatroom_id = ?";
 	private static final String DELETE_ROOM = "DELETE FROM member_chartoom " + "WHERE member_chatroom_id = ? ;";
 	private static final String DELETE_ROOM_MES = "DELETE FROM member_message" + "WHERE member_chatroom_id = ?";
-	private static final String GET_ALL_ROOM ="SELECT member_chatroom_id FROM member_chatroom ;";
+	private static final String GET_ALL_ROOM ="SELECT * FROM member_chatroom ;";
 	// --------------------自動新增聊天室
 	@Override
 	public void addChatroom(Integer userA, Integer userB) {
@@ -155,7 +155,7 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 //	}
 
 	@Override
-	public List<ChatroomIdVO> getAll() {
+	public List<ChatroomIdVO> getAllRoom() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -175,6 +175,29 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 		return list;
 
 	
+	}
+
+	@Override
+	public List<ChatroomIdVO> getAll() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<ChatroomIdVO> list = new LinkedList<ChatroomIdVO>();
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(GET_ALL_ROOM);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				ChatroomIdVO cr = new ChatroomIdVO();
+				cr.setChatroomId(rs.getInt("member_chatroom_id"));
+				cr.setMemberA(rs.getInt("member_a_id"));
+				cr.setMemberB(rs.getInt("member_b_id"));
+				list.add(cr);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

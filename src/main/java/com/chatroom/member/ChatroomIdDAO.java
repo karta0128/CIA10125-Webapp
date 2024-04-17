@@ -9,5 +9,6 @@ public interface ChatroomIdDAO {
 	public void deleteChatroom(Integer id);
 	public Set<ChatroomIdVO> getAllChatroom(Integer user);
 	public ChatroomIdVO getOneChatroom(Integer id);
+	public List<ChatroomIdVO> getAllRoom();
 	public List<ChatroomIdVO> getAll();
 }

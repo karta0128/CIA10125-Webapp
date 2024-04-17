@@ -52,12 +52,12 @@ h4 {
 	<%-- </c:if> --%>
 
 	<ul>
-		<li><a href='allMessage.jsp'>所有聊天訊息</a> 的喔. <br> <br></li>
+		<li><a href='allChatroom.jsp'>所有聊天室</a> 的喔. <br> <br></li>
 
 
 		<li>
 			<FORM METHOD="post" ACTION="chatroom.do">
-				<b>輸入聊天室編號 (如100001):</b> <input type="text" name="chatroomid"><font
+				<b>輸入聊天室編號 (如1):</b> <input type="text" name="chatroomid"><font
 					color=red>${errorMsgs.chatroomid}</font> <input type="hidden"
 					name="action" value="getOne_chatroom"> <input
 					type="submit" value="送出">
@@ -76,14 +76,26 @@ h4 {
 			</FORM>
 		</li>
 
-		
+		<li>
+			<FORM METHOD="post" ACTION="chatroom.do">
+				<b>選擇聊天編號並查看訊息內容:</b> <select size="1" name="chatroomid">
+					<c:forEach var="chatroomVO" items="${chatid.all}">
+						<option value="${chatroomVO.chatroomId}">${chatroomVO.chatroomId}
+					</c:forEach>
+				</select> <input type="hidden" name="action" value="get_Message">
+				<input type="submit" value="送出">
+			</FORM>
+		</li>
 	</ul>
 
 
 	<h3>員工管理</h3>
 
 	<ul>
-		<li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
+		<li><a href='addEmp.jsp'>我想與人獨處一室</a>新增聊天室</li>
+	</ul>
+	<ul>
+		<li><a href='addEmp.jsp'>我想大聲說</a>新增訊息</li>
 	</ul>
 
 
