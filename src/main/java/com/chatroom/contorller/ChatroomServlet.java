@@ -2,6 +2,7 @@ package com.chatroom.contorller;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.chatroom.member.ChatroomIdServlet;
 import com.chatroom.member.ChatroomIdVO;
+import com.chatroom.message.MessageIdVO;
+import com.chatroom.message.MessageServlet;
 
 @WebServlet("/chatroom/chatroom.do")
 public class ChatroomServlet extends HttpServlet {
@@ -25,11 +28,12 @@ public class ChatroomServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
+		/* ============ 取得單一聊天室資訊 ============ */
 		if ("getOne_chatroom".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			// ------ 接收請求參數
+
+			// ------ 接收請求參數 ------//
 			String str = req.getParameter("chatroomid");
 			if (str == null || str.trim().length() == 0) {
 				errorMsgs.put("chatroomid", "請輸入聊天室編號");
@@ -51,7 +55,7 @@ public class ChatroomServlet extends HttpServlet {
 				return;
 			}
 
-			// ------ 查詢
+			// ------ 查詢 ------//
 			ChatroomIdServlet roomSvc = new ChatroomIdServlet();
 			ChatroomIdVO roomVO = roomSvc.getOneRoom(chatroomid);
 			if (roomVO == null) {
@@ -62,21 +66,112 @@ public class ChatroomServlet extends HttpServlet {
 				failureView.forward(req, res);
 				return;
 			}
-			System.out.println(chatroomid);
-			System.out.println(roomVO.getMemberA());
-			System.out.println(roomVO.getMemberB());
+//			System.out.println(chatroomid);
+//			System.out.println(roomVO.getMemberA());
+//			System.out.println(roomVO.getMemberB());
 
-			// ------ 發送
+			// ------ 發送 ------//
 			req.setAttribute("roomVO", roomVO);
 			String url = "/chatroom/listOneEmp.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-//*******************************//
-		if("get_Message".equals(action)) {
-			
+
+		/* ============ 取得單一聊天室訊息 ============ */
+		if ("get_Message".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println("ERROR - 1");
+			// ------ 接收請求參數 ------//
+			String str = req.getParameter("chatroomid");
+			if (str == null || str.trim().length() == 0) {
+				errorMsgs.put("chatroomid", "請輸入聊天室編號");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/select_page.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+//			Integer chatroomid = null;
+			System.out.println("ERROR - 2");
+//			try {
+//				chatroomid = Integer.valueOf(str);
+//			} catch (Exception e) {
+//				errorMsgs.put("chatroomid", "聊天室編號格式不正確");
+//			}
+//			if (!errorMsgs.isEmpty()) {
+//				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/select_page.jsp");
+//				failureView.forward(req, res);
+//				return;
+//			}
+			System.out.println("ERROR - 3");
+			// ------ 查詢 ------//
+			MessageServlet mesSvc = new MessageServlet();
+			List<MessageIdVO> mesVO = mesSvc.getOneMes(str);
+			if (mesVO == null) {
+				errorMsgs.put("chatroomid", "查無資料");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/getMessage.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			// ------ 發送 ------//
+			req.setAttribute("mesVO", str);
+			String url = "/chatroom/getMessage.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			System.out.println("ERROR - end");
+		}
+
+		/* ============ 新增聊天室ID ============ */
+		if ("add_Chatroom".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			System.out.println("ERROR - 1");
+			// ------ 接收請求參數 ------//
+			String str = req.getParameter("chatroomid");
+			if (str == null || str.trim().length() == 0) {
+				errorMsgs.put("chatroomid", "請輸入聊天室編號");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/select_page.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			Integer chatroomid = null;
+			System.out.println("ERROR - 2");
+			try {
+				chatroomid = Integer.valueOf(str);
+			} catch (Exception e) {
+				errorMsgs.put("chatroomid", "聊天室編號格式不正確");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/select_page.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			System.out.println("ERROR - 3");
+			// ------ 查詢 ------//
+			MessageServlet mesSvc = new MessageServlet();
+			List<MessageIdVO> mesVO = mesSvc.getOneMes(str);
+			if (mesVO == null) {
+				errorMsgs.put("chatroomid", "查無資料");
+			}
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/getMessage.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+			// ------ 發送 ------//
+			req.setAttribute("mesVO", str);
+			String url = "/chatroom/getMessage.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+			System.out.println("ERROR - end");
 		}
 	}
+
 //	public static void main(String[] args) {
 //		Integer chatroomid = 1;
 //		ChatroomIdServlet roomSvc = new ChatroomIdServlet();

@@ -1,6 +1,8 @@
 package com.chatroom.message;
 
-import java.util.List;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 
 
@@ -8,18 +10,18 @@ public class Test_message {
 
 	public static void main(String[] args) {
 		//-------發送測試
-		/*
+		
 		MessageIdVO mes = new MessageIdVO();
 		Date date = new Date();
 		Timestamp ts = new Timestamp(date.getTime());
 		
-		mes.setChatroomId(100000001);
-		mes.setContent("哈囉你好嗎?");
-		mes.setTimestamp(ts);
-		mes.setType((byte)0);
+		mes.setChatroomId(1);
+		mes.setContent("我很好!!");
+		mes.setDate(ts);
+		mes.setType(1);
 		MessageIdDAOImp midi = new MessageIdDAOImp();
 		midi.sendMessage(mes);
-		*/
+		
 		
 		/*
 		MessageIdDAOImp midi2 = new MessageIdDAOImp();

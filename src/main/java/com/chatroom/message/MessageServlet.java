@@ -32,7 +32,7 @@ public void updataMes(Integer id, String mes) {
 public void deleteMes(Integer id) {
 	dao.deleteMessage(id);
 }
-public List<MessageIdVO> getOneMes(Integer id) {
+public List<MessageIdVO> getOneMes(String id) {
 	return dao.getMessage(id);
 }
 

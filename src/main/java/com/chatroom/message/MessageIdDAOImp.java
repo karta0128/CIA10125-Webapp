@@ -55,7 +55,7 @@ public class MessageIdDAOImp implements MessageIdDAO {
 	}
 
 	@Override
-	public List<MessageIdVO> getMessage(Integer user) {
+	public List<MessageIdVO> getMessage(String user) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -63,7 +63,7 @@ public class MessageIdDAOImp implements MessageIdDAO {
 		try {
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(GET_MESSAGE);
-			ps.setInt(1, user);
+			ps.setString(1, user);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				MessageIdVO mes = new MessageIdVO();
@@ -152,6 +152,18 @@ public class MessageIdDAOImp implements MessageIdDAO {
 		}
 		
 		
+	}
+	public static void main(String[] args) {
+		MessageIdDAOImp mes = new MessageIdDAOImp();
+		String str = "1";
+		List<MessageIdVO> list = mes.getMessage(str);
+		for(MessageIdVO mea:list) {
+			System.out.println(mea.getChatroomId());
+			System.out.println(mea.getMessageId());
+			System.out.println(mea.getContent());
+			System.out.println(mea.getType());
+			System.out.println(mea.getDate());
+		}
 	}
 
 }
