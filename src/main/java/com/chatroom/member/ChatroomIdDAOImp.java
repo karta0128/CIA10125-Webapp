@@ -9,25 +9,26 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class ChatroomIdDAOImp implements ChatroomIdDAO {
-	private static final String ADD_CHATROOM = "INSERT INTO mmdf.member_chatroom(member_a_id,member_b_id)"
+	private static final String driver = "com.mysql.cj.jdbc.Driver";
+	private static final String ADD_CHATROOM = "INSERT INTO member_chatroom(member_a_id,member_b_id)"
 			+ "VALUES(?,?); ";
 //	private static final String GET_ALL_CHATROOM = 
 //			"SELECT *　FROM member_chatroom WHERE = ? ";
-	private static final String MEMBER_CHATROOM = "SELECT * FROM mmdf.member_chatroom "
+	private static final String MEMBER_CHATROOM = "SELECT * FROM member_chatroom "
 			+ "WHERE member_a_id = ? || member_b_id =?";
-	private static final String IS_EXIST_CHATROOM = "SELECT member_chatroom_id FROM mmdf.member_chatroom "
+	private static final String IS_EXIST_CHATROOM = "SELECT member_chatroom_id FROM member_chatroom "
 			+ "WHERE (member_a_id = ? && member_b_id = ? ) || (member_a_id = ? && member_b_id = ?);";
-	private static final String GET_MEMBER_ROOM = "SELECT member_a_id, member_b_id FROM mmdf.member_chatroom "
+	private static final String GET_MEMBER_ROOM = "SELECT member_chatroom_id, member_a_id, member_b_id FROM member_chatroom "
 			+ "WHERE member_chatroom_id = ?";
-	private static final String DELETE_ROOM = "DELETE FROM mmdf.member_chartoom " + "WHERE member_chatroom_id = ? ;";
-	private static final String DELETE_ROOM_MES = "DELETE FROM mmdf.member_message" + "WHERE member_chatroom_id = ?";
-
+	private static final String DELETE_ROOM = "DELETE FROM member_chartoom " + "WHERE member_chatroom_id = ? ;";
+	private static final String DELETE_ROOM_MES = "DELETE FROM member_message" + "WHERE member_chatroom_id = ?";
+	private static final String GET_ALL_ROOM ="SELECT member_chatroom_id FROM member_chatroom ;";
 	// --------------------自動新增聊天室
 	@Override
 	public void addChatroom(Integer userA, Integer userB) {
@@ -69,10 +70,10 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 	}
 
 	// ---------------想要自動跳出聊天室
-	@Override
-	public void receiveChatroom() {
+	//@Override
+	//public void receiveChatroom() {
 
-	}
+	//}
 
 	// ---------------未定
 	@Override
@@ -126,11 +127,13 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 		ResultSet rs = null;
 		ChatroomIdVO cr = new ChatroomIdVO();
 		try {
+			Class.forName(driver);
 			con = DriverManager.getConnection(URL, USER, PASSWORD);
 			ps = con.prepareStatement(GET_MEMBER_ROOM);
 			ps.setInt(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
+				cr.setChatroomId(rs.getInt("member_chatroom_id"));
 				cr.setMemberA(rs.getInt("member_a_id"));
 				cr.setMemberB(rs.getInt("member_b_id"));
 				
@@ -138,8 +141,40 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		return cr;
+	}
+//	public static void main(String[] args) {
+//		ChatroomIdDAOImp cd = new ChatroomIdDAOImp();
+//		ChatroomIdVO cvo = cd.getOneChatroom(1);
+//		System.out.println(cvo.getChatroomId());
+//		System.out.println(cvo.getMemberA());
+//		System.out.println(cvo.getMemberB());
+//	}
+
+	@Override
+	public List<ChatroomIdVO> getAll() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<ChatroomIdVO> list = new LinkedList<ChatroomIdVO>();
+		try {
+			con = DriverManager.getConnection(URL, USER, PASSWORD);
+			ps = con.prepareStatement(GET_ALL_ROOM);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				ChatroomIdVO cr = new ChatroomIdVO();
+				cr.setChatroomId(rs.getInt("member_chatroom_id"));
+				list.add(cr);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	
 	}
 
 }

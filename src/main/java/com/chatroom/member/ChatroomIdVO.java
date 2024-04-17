@@ -10,7 +10,6 @@ public class ChatroomIdVO {
 	}
 
 	public ChatroomIdVO(Integer chatroomId, Integer memberA, Integer memberB) {
-		super();
 		this.chatroomId = chatroomId;
 		this.memberA = memberA;
 		this.memberB = memberB;

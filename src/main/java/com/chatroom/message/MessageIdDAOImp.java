@@ -15,13 +15,13 @@ import java.util.List;
 import com.mysql.cj.xdevapi.PreparableStatement;
 
 public class MessageIdDAOImp implements MessageIdDAO {
-	private static final String SEND_CONTENT = "INSERT INTO mmdf.member_message(member_chatroom_id, message_content, message_date, message_type)"
+	private static final String SEND_CONTENT = "INSERT INTO member_message(member_chatroom_id, message_content, message_date, message_type)"
 			+ "VALUE(?,?,?,?);";
-	private static final String SEND_IMG = "INSERT INTO mmdf.member_message(member_chatroom_id,message_id, message_img, message_type)"
+	private static final String SEND_IMG = "INSERT INTO member_message(member_chatroom_id,message_id, message_img, message_type)"
 			+ "VALUE(?,?,?);";
-	private static final String GET_MESSAGE = "SELECT * FROM mmdf.member_message WHERE member_chatroom_id= ?";
+	private static final String GET_MESSAGE = "SELECT * FROM member_message WHERE member_chatroom_id= ?";
 	private static final String DELETE_MESSAGE = "DELETE FROM member_message WHERE message_id = ?";
-	private static final String UPDATE_MESSAGE = "UPDATE FROM mmdf.member_message SET message_content = ? WHERE message_id = ? ;";
+	private static final String UPDATE_MESSAGE = "UPDATE FROM member_message SET message_content = ? WHERE message_id = ? ;";
 
 	@Override
 	public void sendMessage(MessageIdVO message) {
