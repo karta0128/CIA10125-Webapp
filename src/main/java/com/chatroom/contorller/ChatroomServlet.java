@@ -130,41 +130,41 @@ public class ChatroomServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			System.out.println("ERROR - 1");
 			// ------ 接收請求參數 ------//
-			String str = req.getParameter("chatroomid");
-			if (str == null || str.trim().length() == 0) {
-				errorMsgs.put("chatroomid", "請輸入聊天室編號");
+			String memA = req.getParameter("memberA");
+			String memB = req.getParameter("memberB");
+			if (memA == null || memA.trim().length() == 0) {
+				errorMsgs.put("memberA", "請輸入會員編號");
+			}
+			if (memB == null || memB.trim().length() == 0) {
+				errorMsgs.put("memberB", "請輸入會員編號");
 			}
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/addChatroom.jsp");
 				failureView.forward(req, res);
 				return;
 			}
-			Integer chatroomid = null;
+			Integer memAid = null;
+			Integer memBid = null;
 			System.out.println("ERROR - 2");
 			try {
-				chatroomid = Integer.valueOf(str);
+				memAid = Integer.valueOf(memA);
+				memBid = Integer.valueOf(memB);
 			} catch (Exception e) {
-				errorMsgs.put("chatroomid", "聊天室編號格式不正確");
+				errorMsgs.put("member", "請檢查會員編號");
 			}
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/addChatroom.jsp");
 				failureView.forward(req, res);
 				return;
 			}
 			System.out.println("ERROR - 3");
-			// ------ 查詢 ------//
-			MessageServlet mesSvc = new MessageServlet();
-			List<MessageIdVO> mesVO = mesSvc.getOneMes(str);
-			if (mesVO == null) {
-				errorMsgs.put("chatroomid", "查無資料");
-			}
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/getMessage.jsp");
-				failureView.forward(req, res);
-				return;
-			}
+			// ------ 新增 ------//
+			ChatroomIdServlet roomSvc = new ChatroomIdServlet();
+			roomSvc.addRoom(memAid, memBid);
+
 			// ------ 發送 ------//
-			req.setAttribute("mesVO", str);
+			ChatroomIdVO roomVO = new ChatroomIdVO();
+			req.setAttribute("roomVO", roomVO);
 			String url = "/chatroom/getMessage.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);

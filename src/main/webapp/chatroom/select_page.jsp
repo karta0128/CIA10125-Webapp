@@ -92,7 +92,7 @@ h4 {
 	<h3>員工管理</h3>
 
 	<ul>
-		<li><a href='addEmp.jsp'>我想與人獨處一室</a>新增聊天室</li>
+		<li><a href='addChatroom.jsp'>我想與人獨處一室</a>新增聊天室</li>
 	</ul>
 	<ul>
 		<li><a href='addEmp.jsp'>我想大聲說</a>新增訊息</li>

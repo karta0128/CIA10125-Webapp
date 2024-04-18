@@ -31,7 +31,7 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 	private static final String GET_ALL_ROOM ="SELECT * FROM member_chatroom ;";
 	// --------------------自動新增聊天室
 	@Override
-	public void addChatroom(Integer userA, Integer userB) {
+	public int addChatroom(Integer userA, Integer userB) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -54,9 +54,12 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 				ps.setInt(1, userA);
 				ps.setInt(2, userB);
 				ps.executeLargeUpdate();
+				
 			} else {
 				System.out.println("此聊天室已創建");
+				return -1;
 			}
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,6 +70,7 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 				e.printStackTrace();
 			}
 		}
+		return qp;
 	}
 
 	// ---------------想要自動跳出聊天室
