@@ -134,6 +134,7 @@ public class ChatroomServlet extends HttpServlet {
 			String memB = req.getParameter("memberB");
 			if (memA == null || memA.trim().length() == 0) {
 				errorMsgs.put("memberA", "請輸入會員編號");
+			
 			}
 			if (memB == null || memB.trim().length() == 0) {
 				errorMsgs.put("memberB", "請輸入會員編號");
@@ -141,6 +142,7 @@ public class ChatroomServlet extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher failureView = req.getRequestDispatcher("/chatroom/addChatroom.jsp");
 				failureView.forward(req, res);
+				System.out.println("ERROR - 1.1");
 				return;
 			}
 			Integer memAid = null;
@@ -160,12 +162,11 @@ public class ChatroomServlet extends HttpServlet {
 			System.out.println("ERROR - 3");
 			// ------ 新增 ------//
 			ChatroomIdServlet roomSvc = new ChatroomIdServlet();
-			roomSvc.addRoom(memAid, memBid);
+			Integer roomVO = roomSvc.addRoom(memAid, memBid);
 
 			// ------ 發送 ------//
-			ChatroomIdVO roomVO = new ChatroomIdVO();
 			req.setAttribute("roomVO", roomVO);
-			String url = "/chatroom/getMessage.jsp";
+			String url = "/chatroom/listOneEmp.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 			System.out.println("ERROR - end");

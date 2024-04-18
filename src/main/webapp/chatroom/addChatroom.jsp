@@ -78,18 +78,19 @@
 	</tr>
 	<tr>
 		<td>會員_A</td>
-		<td><input type="TEXT" name="memberA"   value="${param.job}"   size="20"/></td> <td>${errorMsgs.job}</td>
+		<td><input type="TEXT" name="memberA"   size="20"/></td> <td>${errorMsgs.memberA}</td>
 	</tr>
 	<tr>
 		<td>會員_B</td>
-		<td><input name="TEXT" id="memberB" type="text" ></td> <td>${errorMsgs.hiredate}</td>
+		<td><input  name="memberB" type="text" ></td> <td>${errorMsgs.memberB}</td>
 	</tr>
 
 
 </table>
 <br>
 <input type="hidden" name="action" value="add_Chatroom">
-<input type="submit" value="送出新增"></FORM>
+<input type="submit" value="送出新增">
+</FORM>
 
 </body>
 </html>

@@ -31,7 +31,7 @@ public class ChatroomIdDAOImp implements ChatroomIdDAO {
 	private static final String GET_ALL_ROOM ="SELECT * FROM member_chatroom ;";
 	// --------------------自動新增聊天室
 	@Override
-	public int addChatroom(Integer userA, Integer userB) {
+	public Integer addChatroom(Integer userA, Integer userB) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;

@@ -10,11 +10,9 @@ public class ChatroomIdServlet {
 		dao = new ChatroomIdDAOImp();
 	}
 
-	public ChatroomIdVO addRoom(Integer a, Integer b) {
-		ChatroomIdVO crVO = new ChatroomIdVO();
-		crVO.setMemberA(a);
-		crVO.setMemberB(b);
-		return crVO;
+	public Integer addRoom(Integer a, Integer b) {
+		Integer chroomid = dao.addChatroom(a, b);
+		return chroomid;
 	}
 
 	public void deleteRoom(Integer id) {
